@@ -65,10 +65,10 @@ def login():
 
     return render_template("login.html", form=form)
 
-# @app.route('/secure-page')
-# @login_required
-# def secure_page():
-#     return render_template('secure_page.html')
+@app.route('/secure-page')
+@login_required
+def secure_page():
+    return render_template('secure_page.html')
 
 # @app.route('/logout')
 # @login_required
