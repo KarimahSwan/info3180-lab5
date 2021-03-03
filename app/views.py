@@ -10,7 +10,7 @@ from flask import render_template, request, redirect, url_for, flash
 from flask_login import login_user, logout_user, current_user, login_required
 from app.forms import LoginForm
 from app.models import UserProfile
-# from werkzeug.security import check_password_hash
+from werkzeug.security import check_password_hash
 
 
 ###
@@ -47,23 +47,23 @@ def login():
             # passed to the login_user() method below.
             user=UserProfile.query.filter_by(username=username,password=password).first()
 
-            if user is not None and check_password_hash(user.password,password):
+            if user is not None and check_password_hash(user.password, password):
                 remember_me=False
 
                 if 'remember_me' in request.form:
                     remember_me=True
 
             # get user id, load into session
-            login_user(user, remember=remember_me)
+                login_user(user, remember=remember_me)
 
             # remember to flash a message to the user
-            flash('Login Successfull.','success')
-            return redirect(url_for("secure_page"))
-            return redirect(url_for("home"))  # they should be redirected to a secure-page route instead
-        else:
-            flash('Username or Password is incorrect.','danger')
+                flash('Login Successfull.','success')
+                return redirect(url_for("secure_page"))
+                return redirect(url_for("home"))  # they should be redirected to a secure-page route instead
+            else:
+                flash('Username or Password is incorrect.','danger')
 
-    return render_template("login.html", form=form)
+        return render_template("login.html", form=form)
 
 @app.route('/secure-page')
 @login_required
