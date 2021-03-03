@@ -45,7 +45,7 @@ def login():
             # You will need to import the appropriate function to do so.
             # Then store the result of that query to a `user` variable so it can be
             # passed to the login_user() method below.
-            user=UserProfile.query.filter_by(username=username,password=password).first()
+            user=UserProfile.query.filter_by(username=username).first()
 
             if user is not None and check_password_hash(user.password, password):
                 remember_me=False
@@ -57,13 +57,12 @@ def login():
                 login_user(user, remember=remember_me)
 
             # remember to flash a message to the user
-                flash('Login Successfull.','success')
-                return redirect(url_for("secure_page"))
-                return redirect(url_for("home"))  # they should be redirected to a secure-page route instead
+                flash('Login Successful.','success')
+                return redirect(url_for("secure_page")) # they should be redirected to a secure-page route instead
             else:
                 flash('Username or Password is incorrect.','danger')
 
-        return render_template("login.html", form=form)
+    return render_template("login.html", form=form)
 
 @app.route('/secure-page')
 @login_required
@@ -72,8 +71,8 @@ def secure_page():
 
 @app.route('/logout')
 @login_required
-def logout_user():
-    login_user()
+def logout():
+    logout_user()
     flash('You have been Logged Out.','danger')
     return redirect(url_for("home"))
 
